@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class BeanUtils {
 
     public final static <T, K, V> Map<K, V> map(T t, Function<? super T, ? extends K> kf, Function<? super T, ? extends V> vf) {
-        if(Utils.anyIsEmpty(t, kf, vf)) {
+        if(Utils.isAnyEmpty(t, kf, vf)) {
             return Collections.emptyMap();
         }
 
@@ -20,7 +20,7 @@ public class BeanUtils {
     }
 
     private final static <T, K, V> Map<K, V> map(Collection<T> c, Function<? super T, ? extends K> kf, Function<? super T, ? extends V> vf) {
-        if (Utils.anyIsEmpty(c, kf, vf)) {
+        if (Utils.isAnyEmpty(c, kf, vf)) {
             return Collections.emptyMap();
         }
 
@@ -36,7 +36,7 @@ public class BeanUtils {
     }
 
     public final static <T, R> List<R> distinct(Collection<T> c, Function<? super T, ? extends R> f) {
-        if (Utils.anyIsEmpty(c, f)) {
+        if (Utils.isAnyEmpty(c, f)) {
             return Collections.emptyList();
         }
 
@@ -44,7 +44,7 @@ public class BeanUtils {
     }
 
     public final static <S, T, F, C> void set(S s, Function<S, F> sf, Function<S, C> sc, T t, Function<T, F> tf, BiConsumer<T, C> tc) {
-        if (Utils.anyIsEmpty(s, sf, sc, t, tf, tc)) {
+        if (Utils.isAnyEmpty(s, sf, sc, t, tf, tc)) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class BeanUtils {
     }
 
     public final static <S, T, F, C> void set(Collection<S> sl, Function<S, F> sf, Function<S, C> sc, Collection<T> tl, Function<T, F> tf, BiConsumer<T, C> tc) {
-        if (Utils.isEmpty(sl) || Utils.isEmpty(tl) || Utils.anyIsEmpty(sf, sc, tf, tc)) {
+        if (Utils.isEmpty(sl) || Utils.isEmpty(tl) || Utils.isAnyEmpty(sf, sc, tf, tc)) {
             return;
         }
 
@@ -67,7 +67,7 @@ public class BeanUtils {
 
 
     public final static <T, F> F get(Function<T, F> tf, T t) {
-        if (Utils.anyIsEmpty(t, tf)) {
+        if (Utils.isAnyEmpty(t, tf)) {
             return null;
         }
 
@@ -75,7 +75,7 @@ public class BeanUtils {
     }
 
     private final static <T, F, C> void set(T t, Map<F, C> map, Function<T, F> tf, BiConsumer<T, C> tc) {
-        if(Utils.isEmpty(map) || Utils.anyIsEmpty(t, tf, tc)) {
+        if(Utils.isEmpty(map) || Utils.isAnyEmpty(t, tf, tc)) {
             return;
         }
 
@@ -89,7 +89,7 @@ public class BeanUtils {
     }
 
     private static final class Utils {
-        public static boolean anyIsEmpty(Object... args) {
+        public static boolean isAnyEmpty(Object... args) {
             for(Object arg : args) {
                 if(isEmpty(arg)) {
                     return true;
